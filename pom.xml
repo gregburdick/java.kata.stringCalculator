@@ -4,13 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>mariuszs.sample</groupId>
-    <artifactId>java-spock-test</artifactId>
+    <groupId>gregworks.tddPractice</groupId>
+    <artifactId>java-tdd-kata</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <prerequisites>
         <maven>3.3.1</maven>
     </prerequisites>
+    <modules>
+        <module>stringCalculator</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
