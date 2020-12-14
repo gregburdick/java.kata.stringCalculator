@@ -2,6 +2,8 @@ package spock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Calculator {
 
@@ -25,7 +27,7 @@ public class Calculator {
         return this;
     }
 
-    public int add(String numbers) {
+    public int add(String numbers, String delimiter = ',') {
         int result = 0;
 //        if (numbers.length() == 0) {
 //            return result;
@@ -35,11 +37,15 @@ public class Calculator {
 //        }
 //        return result;
 
-        switch(numbers.length()) {
+        List<String> numberList = Stream.of(numbers.split(delimiter))
+                    .map (elem -> new String(elem))
+                    .collect(Collectors.toList());
+
+        switch(numberList.size()) {
             case 0:
                 return result;
             case 1:
-                result = Integer.parseInt(numbers);
+                result = Integer.valueOf(numberList[0]);
                 break;
             case 3:
                 result = Integer.parseInt(numbers.split(",")[1]) + Integer.parseInt(numbers.split(",")[2]);

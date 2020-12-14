@@ -37,7 +37,14 @@ class CalculatorTest extends Specification {
     }
 
     def "add two comma delimited numbers expect sum of those numbers"(){
-        // ToDo: continue test development here...
+        given: "two comma delimited numbers"
+        Calculator calculator = new Calculator()
+
+//        when: "invoking add (String) method"
+
+        expect: "sum of both supplied numbers"
+        String x = "5,4"
+        calculator.add(x) == 9
     }
 /*
     def "should subtract numbers"() {
