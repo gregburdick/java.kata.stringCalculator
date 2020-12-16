@@ -27,33 +27,38 @@ public class Calculator {
         return this;
     }
 
-    public int add(String numbers, String delimiter = ',') {
+    public int add(String numbers) {
         int result = 0;
-//        if (numbers.length() == 0) {
-//            return result;
-//        }
-//        if (numbers.length() == 1){
-//            result = Integer.parseInt(numbers);
-//        }
-//        return result;
+        String delimiter = ",";
+        ArrayList<String> numberList = new ArrayList<>();
 
-        List<String> numberList = Stream.of(numbers.split(delimiter))
-                    .map (elem -> new String(elem))
-                    .collect(Collectors.toList());
-
-        switch(numberList.size()) {
-            case 0:
+        if (numbers.length() == 0) {
+            return result;
+        } else {
+            if (numbers.length() == 1) {
+                result = Integer.parseInt(numbers);
                 return result;
-            case 1:
-                result = Integer.valueOf(numberList[0]);
-                break;
-            case 3:
-                result = Integer.parseInt(numbers.split(",")[1]) + Integer.parseInt(numbers.split(",")[2]);
-                break;
-            default:
-                break;
+            }
         }
+        // ToDo: extent to accommodate 2+ digit numbers
+
+        if (numbers.contains(delimiter)) {
+            try {
+                numberList = Stream.of(numbers.split(delimiter))
+                        .map(elem -> new String(elem))
+                        .collect(Collectors.toCollection(ArrayList::new));
+//                .collect(toCollection(ArrayList::new));
+
+            } catch (Exception e) {
+                // ToDo: add logging and messaging
+                return 999;
+            }
+        }
+
+        result = Integer.valueOf(numberList.get(0)) + Integer.valueOf(numberList.get(1));
+
         return result;
+
     }
 
     public Calculator subtract(int x) {
