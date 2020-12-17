@@ -46,6 +46,24 @@ class CalculatorTest extends Specification {
         String x = "5,4"
         calculator.add(x) == 9
     }
+
+    def "sum of #numbers = #sum"() {
+        given: "string of three or more comma delimited numbers"
+
+        when: "the class is instantiated"
+        Calculator calculator = new Calculator()
+
+        then: "should sum #numbers = sum"
+        calculator.add(numbers) == sum
+
+        //ToDo: add two digit numbers;
+        where:
+        numbers     | sum
+        "1,2,3"     | 6
+        "2,4,6"     | 12
+        "1,3,5,7"   | 16
+        "-1,0,0,0,1"| 0
+    }
 /*
     def "should subtract numbers"() {
 

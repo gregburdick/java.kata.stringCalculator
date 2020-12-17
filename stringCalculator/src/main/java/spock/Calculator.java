@@ -47,7 +47,6 @@ public class Calculator {
                 numberList = Stream.of(numbers.split(delimiter))
                         .map(elem -> new String(elem))
                         .collect(Collectors.toCollection(ArrayList::new));
-//                .collect(toCollection(ArrayList::new));
 
             } catch (Exception e) {
                 // ToDo: add logging and messaging
@@ -55,7 +54,8 @@ public class Calculator {
             }
         }
 
-        result = Integer.valueOf(numberList.get(0)) + Integer.valueOf(numberList.get(1));
+        for (int i = 0; i < numberList.size(); i++)
+            result += Integer.valueOf(numberList.get(i));
 
         return result;
 
