@@ -9,13 +9,13 @@ class CalculatorTest extends Specification {
     def "should calculate: #x + #y = #sum"() {
 
         expect:
-            spock.Calculator.take(x).add(y).calculate() == sum
+        spock.Calculator.take(x).add(y).calculate() == sum
 
         where:
-            x | y  | sum
-            1 | 2  | 3
-            2 | 5  | 7
-            3 | -1 | 2
+        x | y  | sum
+        1 | 2  | 3
+        2 | 5  | 7
+        3 | -1 | 2
 
     }
 
@@ -36,7 +36,7 @@ class CalculatorTest extends Specification {
         calculator.add(x) == Integer.parseInt(x)
     }
 
-    def "add two comma delimited numbers expect sum of those numbers"(){
+    def "add two comma delimited numbers expect sum of those numbers"() {
         given: "two comma delimited numbers"
         Calculator calculator = new Calculator()
 
@@ -47,7 +47,7 @@ class CalculatorTest extends Specification {
         calculator.add(x) == 9
     }
 
-    def "sum of #numbers = #sum"() {
+    def "sum of #numbers (comma delimited) = #sum"() {
         given: "string of three or more comma delimited numbers"
 
         when: "the class is instantiated"
@@ -58,11 +58,46 @@ class CalculatorTest extends Specification {
 
         //ToDo: add two digit numbers;
         where:
-        numbers     | sum
-        "1,2,3"     | 6
-        "2,4,6"     | 12
-        "1,3,5,7"   | 16
-        "-1,0,0,0,1"| 0
+        numbers      | sum
+        "1,2,3"      | 6
+        "2,4,6"      | 12
+        "1,3,5,7"    | 16
+        "-1,0,0,0,1" | 0
+    }
+
+    def "sum of #numbers (new line delimited) = #sum"() {
+        given: "string of new line delimited numbers"
+
+        when: "the class is instantiated"
+        Calculator calculator = new Calculator()
+
+        then: "should sum #numbers = sum"
+        calculator.add(numbers) == sum
+
+        //ToDo: add two digit numbers;
+        where:
+        numbers               | sum
+        "1\n2\n3"             | 6
+        "2\n3"                | 5
+        "2\n-1\n3\n-2\n4\n-3" | 3
+    }
+
+    def "support different delimiters"() {
+        given: "delimiter specified in string"
+
+        when: "invoking the add (String) method"
+        Calculator calculator = new Calculator()
+
+        then: "the sum of all numbers is returned"
+        calculator.add(numbers) == sum
+
+        where:
+    numbers             | sum
+        "//;\n1;2"      |   3
+        "//,\n1,2"      |   3
+        "//!\n2!2"      |   4
+        "//#\n3#2"      |   5
+        "//@\n7@2"      |   9
     }
 /*
     def "should subtract numbers"() {

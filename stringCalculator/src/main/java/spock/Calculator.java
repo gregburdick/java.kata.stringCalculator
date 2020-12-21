@@ -29,30 +29,14 @@ public class Calculator {
 
     public int add(String numbers) {
         int result = 0;
-        String delimiter = ",";
-        ArrayList<String> numberList = new ArrayList<>();
 
-        if (numbers.length() == 0) {
+        if (numbers == "") {
             return result;
-        } else {
-            if (numbers.length() == 1) {
-                result = Integer.parseInt(numbers);
-                return result;
-            }
         }
-        // ToDo: extent to accommodate 2+ digit numbers
 
-        if (numbers.contains(delimiter)) {
-            try {
-                numberList = Stream.of(numbers.split(delimiter))
-                        .map(elem -> new String(elem))
-                        .collect(Collectors.toCollection(ArrayList::new));
+        String delimiter = getDelimiter(numbers);
 
-            } catch (Exception e) {
-                // ToDo: add logging and messaging
-                return 999;
-            }
-        }
+        ArrayList<String> numberList = getNumberList(numbers, delimiter);
 
         for (int i = 0; i < numberList.size(); i++)
             result += Integer.valueOf(numberList.get(i));
@@ -79,5 +63,39 @@ public class Calculator {
         accumulators.clear();
         add(accumulator);
         return this;
+    }
+
+    protected String getDelimiter(String numbers) {
+        String delimiter = "";
+        if (numbers.startsWith("//")) {
+            delimiter = numbers.substring(2, 3);
+        } else {
+            if (!numbers.contains(",") && numbers.contains("\n")) {
+                delimiter = "\n";
+            } else {
+                delimiter = ",";
+            }
+        }
+        return delimiter;
+    }
+
+    protected ArrayList<String> getNumberList(String numbers, String delimiter) {
+        ArrayList<String> numberList = new ArrayList<>();
+
+        if (numbers.startsWith("//")) {
+            numbers = numbers.substring(4);
+        }
+
+        try {
+            numberList = Stream.of(numbers
+                    .split(delimiter))
+                    .map(elem -> new String(elem))
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+        } catch (Exception e) {
+            // ToDo: add logging and messaging
+//            return numberList.add(e.toString());
+        }
+        return numberList;
     }
 }
