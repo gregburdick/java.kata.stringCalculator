@@ -99,6 +99,17 @@ class CalculatorTest extends Specification {
         "//#\n3#2"      |   5
         "//@\n7@2"      |   9
     }
+
+    def "5. Calling Add with a negative number throws exception"(){
+        given: "negative number in string"
+
+        when: "invoking the add (String) method"
+
+        then: "\"Negatives Not Allowed\" exception thrown"
+        calculator.add(numbers)
+        def e = thrown(CustomException)
+        e.message == "Some Message"
+    }
 /*
     def "should subtract numbers"() {
 
